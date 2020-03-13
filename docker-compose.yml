@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  web:
+    container_name: vue-test
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /app
+    environment:
+        TZ: ru/RU
+
+    ports:
+      - 8080:80
+
