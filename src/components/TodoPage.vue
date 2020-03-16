@@ -62,13 +62,15 @@
                                         {{ task.title }}
                                     </span>
                                 </label>
-                                <b-icon v-if="update" @click.prevent="removeTask(index)" class="float-right" variant="danger" font-scale="2" icon="x-octagon">
+                                <button v-if="update" @click.prevent="removeTask(index)" class="float-right btn btn-danger btn-sm ml-2" >
                                     X
-                                </b-icon>
-                                <b-icon v-if="update && updateIndexTask!==index" @click.prevent="updateIndexTask=index" class="float-right" variant="warning" font-scale="2" icon="pencil">
-                                </b-icon>
-                                <b-icon v-if="update && updateIndexTask===index" @click.prevent="updateIndexTask=''" class="float-right" variant="success" font-scale="2" icon="check-circle">
-                                </b-icon>
+                                </button>
+                                <button v-if="update && updateIndexTask!==index" @click.prevent="updateIndexTask=index" class="float-right btn btn-warning btn-sm">
+                                    Update
+                                </button>
+                                <button v-if="update && updateIndexTask===index" @click.prevent="updateIndexTask=''" class="float-right btn btn-success btn-sm">
+                                    Fix
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -191,11 +193,11 @@ export default {
             for (let i = 0; i < this.todos.length; ++i) {
                 if (this.id == this.todos[i].id) {
                     this.todo = this.todos[i];
-                    localStorage.todo = JSON.stringify(this.todo);
-                    localStorage.returnChanges = JSON.stringify(this.todo);
                     break;
                 }
             }
+            localStorage.todo = JSON.stringify(this.todo);
+            localStorage.returnChanges = JSON.stringify(this.todo);
         }
     },
 }

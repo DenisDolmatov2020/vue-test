@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
         <h1 class="h3 mb-4 text-gray-800">
-            <b-icon-backspace-fill v-if="this.$route.name!=='TodoList'" variant="success" @click="todoList"></b-icon-backspace-fill>
+            <button v-if="this.$route.name!=='TodoList'"  class="btn btn-success btn-icon-split btn-sm" @click="todoList">
+                Back
+            </button>
             {{ this.$route.name }}
             <button v-if="this.$route.name==='TodoList'" class="btn btn-primary btn-icon-split btn-sm">
                 <span class="text" @click="newTodo">New Todo</span>
