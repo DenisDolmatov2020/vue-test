@@ -3,6 +3,10 @@ node_modules
 /dist
 
 package-lock.json
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3513227abe5e378a63938da62f98cf565e740210
 # local env files
 .env.local
 .env.*.local
