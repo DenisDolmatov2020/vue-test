@@ -26,9 +26,6 @@
         </div>
     </div>
     <TodoModal v-show="isModalVisible" @close="closeModal">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal" aria-label="Close modal">
-            Cancel action
-        </button>
         <button type="button" class="btn btn-danger" @click="remove(todo_index)">Delete Todo</button>
     </TodoModal>
 </div>
