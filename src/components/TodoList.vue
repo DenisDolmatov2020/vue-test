@@ -1,18 +1,18 @@
 <template>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 offset-2" v-for="(todo, index) in todos.slice()" :key="index">
+        <div class="col-lg-8 offset-2" v-for="(todo, index) in todos.slice().reverse()" :key="index">
             <div class="card shadow">
                 <div class="card-header">
                     <h1>
-                        <span class="mr-5 font-weight-bold text-primary" @click="todoPage(todo.id, false)">
+                        <span class="mr-5 font-weight-bold text-primary" @click="todoPage(todo, false)">
                             {{ todo.title }}
                         </span>
-                        <button class="btn btn-warning btn-icon-split btn-sm mr-3">
-                            <span class="text" @click="todoPage(todo.id, true)">Update</span>
+                        <button class="btn btn-danger btn-icon-split btn-sm float-right" @click="showModalRemove(todo.id)">
+                            <span class="text"> Remove </span>
                         </button>
-                        <button class="btn btn-danger btn-icon-split btn-sm">
-                            <span class="text" @click="showModal(index)"> Remove </span>
+                        <button class="btn btn-warning btn-icon-split btn-sm mr-3 float-right">
+                            <span class="text" @click="todoPage(todo, true)"> Update </span>
                         </button>
                     </h1>
                     <div class="my-2"></div>
@@ -25,15 +25,17 @@
             </div>
         </div>
     </div>
-    <TodoModal v-show="isModalVisible" @close="closeModal">
-        <button type="button" class="btn btn-danger" @click="remove(todo_index)">Delete Todo</button>
+    <TodoModal v-show="showModal" @close="closeModal">
+        <button type="button" class="btn btn-danger" @click="removeTodo">Delete Todo</button>
     </TodoModal>
 </div>
 
 </template>
 
 <script>
+import idb from '@/api/idb';
 import TodoModal from '../components/TodoModal.vue';
+
 export default {
     name: "TodoList",
     components: {
@@ -42,29 +44,31 @@ export default {
     data: () => ({
         todos: [],
         todo_index: '',
-        isModalVisible: false,
+        showModal: false,
+        selectedTodoId: null,
     }),
     methods: {
-        showModal(index) {
-            this.isModalVisible = true;
-            this.todo_index = index;
+        showModalRemove(id) {
+            this.selectedTodoId = id;
+            this.showModal = true;
         },
         closeModal() {
-            this.isModalVisible = false;
+            this.showModal = false;
         },
-        todoPage(id__, update){
-            this.$router.push({name: 'TodoPage', params: { id: id__, updateBool: update }})
+        todoPage(todo, update){
+            this.$router.push({name: 'TodoPage', params: { id: todo.id, update: update }})
         },
-        remove(index) {
-            this.todos.splice(index, 1).reverse();
-            localStorage.todos = JSON.stringify(this.todos);
-            this.isModalVisible = false;
+        async removeTodo() {
+            console.log('Delete Todo ID: ' + this.selectedTodoId);
+            await idb.deleteTodo(this.selectedTodoId);
+            this.todos = await idb.listTodos();
+            this.showModal = false;
+            console.log('Delete Todo ID: ' + this.selectedTodoId);
+            this.selectedTodoId = null;
         },
     },
-    beforeMount(){
-        if (localStorage.todos){
-            this.todos = (JSON.parse(localStorage.todos)).reverse()
-        }
+    async beforeMount(){
+        this.todos = await idb.listTodos();
     },
 }
 </script>

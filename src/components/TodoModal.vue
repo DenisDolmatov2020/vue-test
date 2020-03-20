@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @click.prevent="close" aria-label="Close modal">
-                        Cancel action
+                        Close modal
                     </button>
                     <slot></slot>
                 </div>

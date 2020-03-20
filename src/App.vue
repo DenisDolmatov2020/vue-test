@@ -4,6 +4,8 @@
       <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
           <Nav/>
+          <Dialog/>
+
           <router-view/>
         </div>
       </div>
@@ -16,7 +18,8 @@ import Nav from "./components/Nav";
 
 export default {
   name: 'App',
-  components: {Nav, }
+  components: {Nav, },
+
 }
 </script>
 

@@ -15,8 +15,14 @@ const routes = [
     component: TodoList
   },
   {
-    path: '/:id',
+    path: '/todo/:id',
     name: 'TodoPage',
+    component: TodoPage,
+    props: true,
+  },
+  {
+    path: '/new-todo',
+    name: 'NewTodoPage',
     component: TodoPage,
     props: true,
   },
@@ -26,6 +32,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
 export default router

@@ -1,14 +1,14 @@
 <template>
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <h1 class="h3 mb-4 text-gray-800">
-            <button v-if="this.$route.name!=='TodoList'"  class="btn btn-success btn-icon-split btn-sm" @click="todoList">
+    <nav class="row navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <div class="col-12">
+            <button v-if="this.$route.name!=='TodoList'"  class="btn btn-success btn-icon-split btn-sm float-left mr-2" @click="todoList">
                 Back
             </button>
-            {{ this.$route.name }}
-            <button v-if="this.$route.name==='TodoList'" class="btn btn-primary btn-icon-split btn-sm">
+            <button v-else class="btn btn-primary btn-icon-split btn-sm float-right">
                 <span class="text" @click="newTodo">New Todo</span>
             </button>
-        </h1>
+            <h3>{{ this.$route.name }}</h3>
+        </div>
     </nav>
 </template>
 
@@ -20,7 +20,8 @@
                 this.$router.push({name: 'TodoList'})
             },
             newTodo(){
-                this.$router.push({name: 'TodoPage', params: { id: '0'}})
+                console.log('New todo page');
+                this.$router.push({name: 'NewTodoPage', params: { update: true }});
             },
         },
     }
