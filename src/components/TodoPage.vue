@@ -5,73 +5,39 @@
             <div class="card shadow">
                 <!-- head todo page -->
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <!-- if update page or new page -->
-                        <div class="row" >
-                            <div  class="col-6 input-group" v-if="update">
-                                <input type="text" class="form-control mr-2" title="Title" placeholder="Title" v-model="todo.title">
-                                <button v-if="update" class="btn btn-outline-success mr-2" @click.prevent="saveTodo">
-                                    Save
-                                </button>
-                                <button class="btn btn-outline-dark" @click.prevent="showModal(false)">
-                                    Cancel
-                                </button>
-                            </div>
-                            <div class="col-6" v-else>
-                                <h2>
-                                    <span> {{ todo.title }} </span>
-                                    <button class="btn btn-outline-warning float-right" @click.prevent="update=!update">
-                                        Update
-                                    </button>
-                                </h2>
-                            </div>
-                            <div class="col-6" v-if="this.$route.params.id">
-                                <button v-if="update && cancelChangesButton" class="btn btn-outline-secondary mr-1"
-                                        @click.prevent="cancelChanges">
-                                    Return
-                                </button>
-                                <button  class="btn btn-outline-danger float-right ml-2" @click.prevent="showModal(true)" type="button">
-                                    Remove
-                                </button>
-                            </div>
+                    <!-- if update page or new page -->
+                    <div class="row" >
+                        <div  class="col-6 input-group" v-if="update">
+                            <input type="text" class="form-control mr-2" title="Title" placeholder="Title" v-model="todo.title">
+                            <button v-if="update" class="btn btn-outline-success mr-2" @click.prevent="saveTodo">
+                                Save
+                            </button>
+                            <button class="btn btn-outline-dark" @click.prevent="showModal(false)">
+                                Cancel
+                            </button>
                         </div>
-
-                    </h6>
-                    <div class="my-2"></div>
-                </div>
-
-                <!-- body TASKS-->
-                <div class="card-body" >
-                    <div class="row">
-                        <div class="col-6 offset-3 mb-5" v-if="update">
-                            <div class="input-group">
-                                <input type="text" class="form-control" v-on:keyup.enter="putTask" placeholder="Entry new todo ..."
-                                       v-model="new_task">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button" @click="putTask">PUT</button>
-                                </span>
-                            </div>
+                        <div class="col-6" v-else>
+                            <h2>
+                                <span> {{ todo.title }} </span>
+                                <button class="btn btn-outline-warning float-right" @click.prevent="update=!update">
+                                    Update
+                                </button>
+                            </h2>
                         </div>
-                        <div class="col-10 offset-1 mb-3" v-for="(task, index) in todo.tasks.slice().reverse()" :key="task.id">
-                            <div class="input-group">
-                                <input type="checkbox" v-model="todo.selectedTasks" :disabled="!update">
-                                <input class="form-control mr-0" type="text" :for="task.selectedTasks"
-                                       v-model="task.title" :disabled="selectedTask!==task.id">
-                                <span class="input-group-btn" v-if="update">
-                                    <button @click.prevent="selectedTask=''" v-if="selectedTask===task.id" class="btn btn-success">
-                                        Fix
-                                    </button>
-                                    <button @click.prevent="selectedTask=task.id" v-else class="btn btn-warning">
-                                        Edit
-                                    </button>
-                                    <button  @click.prevent="removeTask(index)" class="btn btn-danger ml-2">
-                                        Delete
-                                    </button>
-                                </span>
-                            </div>
+                        <div class="col-6" v-if="this.$route.params.id">
+                            <button v-if="update && cancelChangesButton" class="btn btn-outline-secondary mr-1"
+                                    @click.prevent="cancelChanges">
+                                Return
+                            </button>
+                            <button  class="btn btn-outline-danger float-right ml-2" @click.prevent="showModal(true)" type="button">
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </div>
+                <TodoPageTasks :todo="todo" :update="update" />
+
+
             </div>
         </div>
     </div>
@@ -87,24 +53,24 @@
 // import { uuid } from 'vue-uuid';
 import idb from '@/api/idb';
 import TodoModal from "@/components/TodoModal";
+import TodoPageTasks from "@/components/TodoPageTasks";
 
 
 export default {
     name: "TodoPage",
     components: {
+        TodoPageTasks,
         TodoModal,
     },
     data: () => ({
         update: null,
         text: '',
-        new_task: '',
         todo: {
             title: '',
             tasks: [],
             selectedTasks: []
         },
         cancelTodo: '',
-        selectedTask: '',
         modalShow: false,
         deleteFlag: false,
     }),
@@ -127,17 +93,7 @@ export default {
             this.modalShow = false;
             this.deleteFlag = false;
         },
-        // tasks
-        putTask(){
-            if(this.new_task){
-                let id = this.todo.tasks.length;
-                this.todo.tasks.push({id: id++, title: this.new_task});
-                this.new_task = '';
-            }
-        },
-        removeTask(index){
-            this.todo.tasks.splice( -index-1, 1);
-        },
+
 
         // todo
         async cancelChanges(){
