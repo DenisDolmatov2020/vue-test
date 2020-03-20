@@ -17,11 +17,12 @@
                     </h1>
                     <div class="my-2"></div>
                 </div>
-                <div class="card-body">
+                <ul class="card-body">
                     <li v-for="task in todo.tasks.slice().reverse()" :key="task.id">
-                        {{task.title}}
+                        <input type="checkbox" v-model="todo.selectedTasks" disabled>
+                        <label :for="task.selectedTasks">{{task.title}}</label>
                     </li>
-                </div>
+                </ul>
             </div>
         </div>
     </div>

@@ -1,6 +1,5 @@
 <template>
 <div class="container-fluid">
-    <!-- Modals Todo -->
     <div class="row">
         <div class="col-lg-8 offset-lg-2" style="min-width: 800px">
             <div class="card shadow">
@@ -10,8 +9,7 @@
                         <!-- if update page or new page -->
                         <div class="row" >
                             <div  class="col-6 input-group" v-if="update">
-                                <input type="text" class="form-control mr-2" title="Title"
-                                       placeholder="Title" v-model="todo.title">
+                                <input type="text" class="form-control mr-2" title="Title" placeholder="Title" v-model="todo.title">
                                 <button v-if="update" class="btn btn-outline-success mr-2" @click.prevent="saveTodo">
                                     Save
                                 </button>
@@ -32,13 +30,12 @@
                                         @click.prevent="cancelChanges">
                                     Return
                                 </button>
-                                <button  class="btn btn-outline-danger float-right ml-2" @click.prevent="showModal(true)"
-                                         type="button">
+                                <button  class="btn btn-outline-danger float-right ml-2" @click.prevent="showModal(true)" type="button">
                                     Remove
                                 </button>
                             </div>
                         </div>
-                        <!-- static information about Todo -->
+
                     </h6>
                     <div class="my-2"></div>
                 </div>
@@ -57,8 +54,8 @@
                         </div>
                         <div class="col-10 offset-1 mb-3" v-for="(task, index) in todo.tasks.slice().reverse()" :key="task.id">
                             <div class="input-group">
-                                <input type="checkbox" :value="task.id" v-model="todo.selectedTasks" :disabled="!update">
-                                <input class="form-control mr-0" type="text" :for="task.id"
+                                <input type="checkbox" v-model="todo.selectedTasks" :disabled="!update">
+                                <input class="form-control mr-0" type="text" :for="task.selectedTasks"
                                        v-model="task.title" :disabled="selectedTask!==task.id">
                                 <span class="input-group-btn" v-if="update">
                                     <button @click.prevent="selectedTask=''" v-if="selectedTask===task.id" class="btn btn-success">
@@ -176,7 +173,5 @@ export default {
 </script>
 
 <style scoped>
-    .completed {
-        text-decoration: line-through;
-    }
+
 </style>
