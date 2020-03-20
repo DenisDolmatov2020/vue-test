@@ -8,10 +8,10 @@
                         <span class="mr-5 font-weight-bold text-primary" @click="todoPage(todo, false)">
                             {{ todo.title }}
                         </span>
-                        <button class="btn btn-danger btn-icon-split btn-sm float-right" @click="showModalRemove(todo.id)">
+                        <button class="btn btn-danger btn-icon-split float-right" @click="showModalRemove(todo.id)">
                             <span class="text"> Remove </span>
                         </button>
-                        <button class="btn btn-warning btn-icon-split btn-sm mr-3 float-right">
+                        <button class="btn btn-warning btn-icon-split mr-3 float-right">
                             <span class="text" @click="todoPage(todo, true)"> Update </span>
                         </button>
                     </h1>

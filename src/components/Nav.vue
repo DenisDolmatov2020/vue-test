@@ -4,7 +4,7 @@
             <button v-if="this.$route.name!=='TodoList'"  class="btn btn-success btn-icon-split btn-sm float-left mr-2" @click="todoList">
                 Back
             </button>
-            <button v-else class="btn btn-primary btn-icon-split btn-sm float-right">
+            <button v-else class="btn btn-primary btn-icon-split float-right">
                 <span class="text" @click="newTodo">New Todo</span>
             </button>
             <h3>{{ this.$route.name }}</h3>
